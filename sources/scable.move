@@ -51,6 +51,8 @@ module scable_vault::scable {
             cap,
         };
         transfer::share_object(treasury);
+        let admin_cap = AdminCap { id: object::new(ctx) };
+        transfer::transfer(admin_cap, ctx.sender());
     }
 
     // Public Functions
