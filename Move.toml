@@ -3,6 +3,7 @@ name = "ScableVault"
 edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
 # license = ""           # e.g., "MIT", "GPL", "Apache 2.0"
 # authors = ["..."]      # e.g., ["Joe Smith (joesmith@noemail.com)", "John Snow (johnsnow@noemail.com)"]
+published-at = "0x08a7a3c873402d7cf9d44192aae337e0b27a72c2a4a230d10230488cf614c5a2"
 
 [dependencies]
 ScallopProtocol = { git = "https://github.com/scallop-io/sui-lending-protocol.git", subdir = "contracts/protocol", rev = "main" }
@@ -20,7 +21,8 @@ Math = { git = "https://github.com/scallop-io/sui-lending-protocol.git", subdir 
 # Override = { local = "../conflicting/version", override = true }
 
 [addresses]
-scable_vault = "0x0"
+# scable_vault = "0x0"
+scable_vault = "0x08a7a3c873402d7cf9d44192aae337e0b27a72c2a4a230d10230488cf614c5a2"
 
 # Named addresses will be accessible in Move as `@name`. They're also exported:
 # for example, `std = "0x1"` is exported by the Standard Library.
