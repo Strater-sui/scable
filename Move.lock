@@ -2,7 +2,7 @@
 
 [move]
 version = 2
-manifest_digest = "7C67982761F937B8FE05E7A2C979802831ADEB8A31345CA2072E417356540D67"
+manifest_digest = "E90D25BFDB18D812EC2AAE0587B5DEE051EEE35E91F3A5F0044FF5ABCCD5D500"
 deps_digest = "3C4103934B1E040BB6B23F1D610B4EF9F2F1166A50A104EADCF77467C004C600"
 dependencies = [
   { name = "Math" },
@@ -75,7 +75,7 @@ dependencies = [
 ]
 
 [move.toolchain-version]
-compiler-version = "1.27.0"
+compiler-version = "1.27.2"
 edition = "2024.beta"
 flavor = "sui"
 
@@ -84,5 +84,5 @@ flavor = "sui"
 [env.mainnet]
 chain-id = "35834a8a"
 original-published-id = "0x08a7a3c873402d7cf9d44192aae337e0b27a72c2a4a230d10230488cf614c5a2"
-latest-published-id = "0x08a7a3c873402d7cf9d44192aae337e0b27a72c2a4a230d10230488cf614c5a2"
-published-version = "1"
+latest-published-id = "0x98ed1a6b1ba6e524d507a91a5d42431fd4722dd3b118aea41dba32bd5d1b48b0"
+published-version = "2"

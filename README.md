@@ -3,7 +3,7 @@ Convert Scallop sUSDT and sUSDC to nyb stablecoin
 
 ## Package ID
 ```
-0x08a7a3c873402d7cf9d44192aae337e0b27a72c2a4a230d10230488cf614c5a2
+0x98ed1a6b1ba6e524d507a91a5d42431fd4722dd3b118aea41dba32bd5d1b48b0
 ```
 
 ## Shared Objects

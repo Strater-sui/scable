@@ -156,9 +156,11 @@ module scable_vault::scable {
         let scoin_surplus = coin::take(
             &mut vault.scoin_balance, scoin_surplus_amount, ctx,
         );
-        redeem::redeem(
+        let reward = redeem::redeem(
             version, market, scoin_surplus, clock, ctx,
-        )
+        );
+        event::emit_claim(&reward);
+        reward
     }
 
     // Getter Functions
