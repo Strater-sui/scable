@@ -4,11 +4,13 @@ edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
 # license = ""           # e.g., "MIT", "GPL", "Apache 2.0"
 # authors = ["..."]      # e.g., ["Joe Smith (joesmith@noemail.com)", "John Snow (johnsnow@noemail.com)"]
 # published-at = "0x98ed1a6b1ba6e524d507a91a5d42431fd4722dd3b118aea41dba32bd5d1b48b0"
-published-at = "0x78bafc413c95493e839b000c2aee79517f87a90d455e713e6e55e20b3d757d41"
+# published-at = "0x78bafc413c95493e839b000c2aee79517f87a90d455e713e6e55e20b3d757d41"
+# published-at = "0xe28302a52ce131a18a5fb6564e5c99d8f376709f65ad65019881f37b2955c8a9"
+published-at = "0xecc3e8dec68782dbd40bdf416c7305fd5bcf203f536e49a42507934877f8706f"
 
 [dependencies]
 ScallopProtocol = { git = "https://github.com/scallop-io/sui-lending-protocol.git", subdir = "contracts/protocol", rev = "main" }
-Math = { git = "https://github.com/scallop-io/sui-lending-protocol.git", subdir = "contracts/libs/math", rev = "main" }
+spool = { git = "https://github.com/Strater-sui/spool-contract-interface.git", subdir = "spool", rev = "main" }
 
 # For remote import, use the `{ git = "...", subdir = "...", rev = "..." }`.
 # Revision can be a branch, a tag, and a commit hash.
