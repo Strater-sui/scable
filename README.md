@@ -19,6 +19,10 @@ ScableVault (USDT), `272980433`
 ```
 0x6b68b42cbb4efccd9df30466c21fff3c090279992c005c45154bd1a0d87ac725
 ```
+ScableVault (nUSDC), `373914575`
+```
+0xdf91ef19f6038e662e9c89f111ffe19e808cdfb891d080208d15141932f9513b
+```
 
 ## Owned Objects
 AdminCap
