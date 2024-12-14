@@ -6,7 +6,8 @@ edition = "2024.beta" # edition = "legacy" to use legacy (pre-2024) Move
 # published-at = "0x98ed1a6b1ba6e524d507a91a5d42431fd4722dd3b118aea41dba32bd5d1b48b0"
 # published-at = "0x78bafc413c95493e839b000c2aee79517f87a90d455e713e6e55e20b3d757d41"
 # published-at = "0xe28302a52ce131a18a5fb6564e5c99d8f376709f65ad65019881f37b2955c8a9"
-published-at = "0xecc3e8dec68782dbd40bdf416c7305fd5bcf203f536e49a42507934877f8706f"
+# published-at = "0xecc3e8dec68782dbd40bdf416c7305fd5bcf203f536e49a42507934877f8706f"
+published-at = "0x1b4b5dd782453586f2a39dbc154f9ef4ca7780ae9a31154c1c6080985a5d295e"
 
 [dependencies]
 ScallopProtocol = { git = "https://github.com/scallop-io/sui-lending-protocol.git", subdir = "contracts/protocol", rev = "main" }
