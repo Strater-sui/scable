@@ -1,6 +1,7 @@
 module scable_vault::event {
 
     use sui::event::emit;
+    use sui::balance::Balance;
     use sui::coin::Coin;
 
     // Mint SCABLE
@@ -43,5 +44,39 @@ module scable_vault::event {
 
     public(package) fun emit_claim<T>(coin: &Coin<T>) {
         emit(Claim<T> { amount: coin.value() });
+    }
+
+    // Mint SCABLE by Navi
+
+    public struct MintByNavi<phantom T> has copy, drop {
+        amount: u64,
+    }
+
+    public(package) fun emit_mint_by_navi<T>(
+        amount: u64,
+    ) {
+        emit(MintByNavi<T> { amount });
+    }
+
+    // Burn SCABLE by Navi
+
+    public struct BurnByNavi<phantom T> has copy, drop {
+        amount: u64,
+    }
+
+    public(package) fun emit_burn_by_navi<T>(
+        amount: u64,
+    ) {
+        emit(BurnByNavi<T> { amount });
+    }
+
+    // Claim Navi Reward
+
+    public struct ClaimFromNavi<phantom T> has copy, drop {
+        amount: u64,
+    }
+
+    public(package) fun emit_claim_from_navi<T>(balance: &Balance<T>) {
+        emit(ClaimFromNavi<T> { amount: balance.value() });
     }
 }

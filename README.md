@@ -3,7 +3,7 @@ Convert Scallop sUSDT and sUSDC to nyb stablecoin
 
 ## Package ID
 ```
-0xecc3e8dec68782dbd40bdf416c7305fd5bcf203f536e49a42507934877f8706f
+0xfcb963cdfd621eb0e05e3a33eaa4e7ee98497e52fd83491d22a4e7d15226de70
 ```
 
 ## Shared Objects
@@ -27,7 +27,18 @@ ScableVault (USDT), `478140939`
 ```
 0x8471787fc69ef06f4762cb60863e1c48475d79c804a000e613306adee7b7824a
 ```
-
+NaviVault (USDC), `499402466`
+```
+0xb5ed3f2e5c19f425baad3d9a0afffdc84d0550ace2372692cf93325da81e4392
+```
+NaviVault (fdUSD), `499402467`
+```
+0xa2790bbd90275e35214bffd8da3c01742bb5883fde861bf566a9ecfa1b3f5090
+```
+NaviVault (USDT), `499402468`
+```
+0x4ae310b93c65e358b6f8beb73f34d0ac7d507947d8aea404159d19883a3b1c6a
+```
 
 ## Owned Objects
 AdminCap

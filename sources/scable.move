@@ -1,5 +1,6 @@
 module scable_vault::scable {
 
+    use std::ascii::{String};
     use std::type_name;
     use sui::coin::{Self, Coin, TreasuryCap};
     use sui::balance::{Self, Balance};
@@ -14,6 +15,14 @@ module scable_vault::scable {
     use spool::rewards_pool::RewardsPool;
     use spool::user;
     use spool::spool_account::SpoolAccount;
+    use lending_core::account::AccountCap;
+    use lending_core::storage::Storage;
+    use lending_core::pool::Pool;
+    use lending_core::lending;
+    use lending_core::incentive_v2::Incentive as IncentiveV2;
+    use lending_core::incentive_v3::{Self, Incentive as IncentiveV3, RewardFund};
+    use lending_core::logic;
+    use oracle::oracle::{PriceOracle};
     use scable_vault::math;
     use scable_vault::event;
 
@@ -340,4 +349,125 @@ module scable_vault::scable {
 
     fun err_vault_balance_not_enough() { abort 0 }
     fun err_spool_account_not_exists() { abort 0 }
+    fun err_vault_balance_is_not_zero() { abort 0 }
+
+    // Navi
+
+    public struct NaviVault<phantom T> has key {
+        id: UID,
+        account_cap: AccountCap,
+        asset: u8,
+        coin_balance: u64,
+    }
+
+    public fun create_navi_vault<T>(
+        _: &AdminCap,
+        asset: u8,
+        ctx: &mut TxContext,
+    ) {
+        let vault = NaviVault<T> {
+            id: object::new(ctx),
+            account_cap: lending::create_account(ctx),
+            asset,
+            coin_balance: 0,
+        };
+        transfer::share_object(vault);
+    }
+
+    public fun destroy_navi_vault<T>(
+        _: &AdminCap,
+        vault: NaviVault<T>,
+    ): AccountCap {
+        let NaviVault {
+            id, account_cap, asset: _, coin_balance,
+        } = vault;
+        if (coin_balance > 0) {
+            err_vault_balance_is_not_zero();
+        };
+        id.delete();
+        account_cap
+    }
+
+    public fun navi_deposit_coin<T>(
+        vault: &mut NaviVault<T>,
+        treasury: &mut ScableTreasury,
+        clock: &Clock,
+        storage: &mut Storage,
+        pool: &mut Pool<T>,
+        incentive_v2: &mut IncentiveV2,
+        incentive_v3: &mut IncentiveV3,
+        deposit_coin: Coin<T>,
+        ctx: &mut TxContext,
+    ): Coin<SCABLE> {
+        let coin_value = deposit_coin.value();
+        event::emit_mint_by_navi<T>(coin_value);
+        vault.coin_balance = vault.coin_balance + coin_value;
+        incentive_v3::deposit_with_account_cap(
+            clock, storage, pool, vault.asset, deposit_coin, incentive_v2, incentive_v3, &vault.account_cap,
+        );
+        treasury.cap.mint(coin_value, ctx)
+    }
+
+    public fun navi_withdraw_coin<T>(
+        vault: &mut NaviVault<T>,
+        treasury: &mut ScableTreasury,
+        clock: &Clock,
+        storage: &mut Storage,
+        pool: &mut Pool<T>,
+        incentive_v2: &mut IncentiveV2,
+        incentive_v3: &mut IncentiveV3,
+        oracle: &PriceOracle,
+        scable_coin: Coin<SCABLE>,
+        ctx: &mut TxContext,
+    ): Coin<T> {
+        let coin_value = scable_coin.value();
+        event::emit_burn_by_navi<T>(coin_value);
+        if (coin_value > vault.coin_balance) {
+            err_vault_balance_not_enough();
+        };
+        vault.coin_balance = vault.coin_balance - coin_value;
+        treasury.cap.burn(scable_coin);
+        incentive_v3::withdraw_with_account_cap(
+            clock, oracle, storage, pool, vault.asset, coin_value, incentive_v2, incentive_v3, &vault.account_cap
+        ).into_coin(ctx)
+    }
+
+    public fun navi_claim_reward<T, R>(
+        _: &AdminCap,
+        vault: &mut NaviVault<T>,
+        storage: &mut Storage,
+        reward_fund: &mut RewardFund<R>,
+        coin_types: vector<String>,
+        rule_ids: vector<address>,
+        incentive_v3: &mut IncentiveV3,
+        clock: &Clock,
+        ctx: &mut TxContext,
+    ): Coin<R> {
+        let reward_bal = incentive_v3::claim_reward_with_account_cap(
+            clock, incentive_v3, storage, reward_fund, coin_types, rule_ids, &vault.account_cap,
+        );
+        event::emit_claim_from_navi(&reward_bal);
+        coin::from_balance(reward_bal, ctx)
+    }
+
+    public fun navi_claim_interest<T>(
+        _: &AdminCap,
+        vault: &mut NaviVault<T>,
+        oracle: &PriceOracle,
+        storage: &mut Storage,
+        pool: &mut Pool<T>,
+        incentive_v2: &mut IncentiveV2,
+        incentive_v3: &mut IncentiveV3,
+        clock: &Clock,
+        ctx: &mut TxContext,
+    ): Coin<T> {
+        let cap_addr = vault.account_cap.account_owner();
+        let user_balance = logic::user_collateral_balance(storage, vault.asset, cap_addr);
+        let claimed_amount = (user_balance as u64) - vault.coin_balance;
+        let withdrawal_bal = incentive_v3::withdraw_with_account_cap(
+            clock, oracle, storage, pool, vault.asset, claimed_amount, incentive_v2, incentive_v3, &vault.account_cap,
+        );
+        event::emit_claim_from_navi(&withdrawal_bal);
+        withdrawal_bal.into_coin(ctx)
+    }
 }
