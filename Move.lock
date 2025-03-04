@@ -2,7 +2,7 @@
 
 [move]
 version = 3
-manifest_digest = "019E1DA26A02CB6D7B6E6A446B11BD8FAA56DE1B45BD41292E7B874AB5F011E8"
+manifest_digest = "65535BD8F7ED996B1AC5DF1DEE15E8BF813F121E4031CD9BD048F647FFF154BA"
 deps_digest = "F9B494B64F0615AED0E98FC12A85B85ECD2BC5185C22D30E7F67786BB52E507C"
 dependencies = [
   { id = "ScallopProtocol", name = "ScallopProtocol" },
@@ -165,8 +165,6 @@ dependencies = [
   { id = "supra_utils", name = "supra_utils" },
 ]
 
-[env]
-
 [[move.package]]
 id = "utils"
 source = { git = "https://github.com/Bucket-Protocol/navi-protocol-interface.git", rev = "main", subdir = "utils" }
@@ -180,8 +178,10 @@ compiler-version = "1.43.1"
 edition = "2024.beta"
 flavor = "sui"
 
+[env]
+
 [env.mainnet]
 chain-id = "35834a8a"
 original-published-id = "0x08a7a3c873402d7cf9d44192aae337e0b27a72c2a4a230d10230488cf614c5a2"
-latest-published-id = "0xfcb963cdfd621eb0e05e3a33eaa4e7ee98497e52fd83491d22a4e7d15226de70"
-published-version = "7"
+latest-published-id = "0x3eca32f66d6269d0a6c400a760182df74330a4cbf61548f37892c680b295b085"
+published-version = "8"
